@@ -1,0 +1,13 @@
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a [routerLink]="['PersonCreate']" class="nav-link">Create</a>
+        </li>
+    </ul>
+</nav>
+
+<ul>
+    <li *ngFor="#person of page.items">
+        <a [routerLink]="['PersonEdit', {name: person.name}]">{{ person.displayName }}</a>
+    </li>
+</ul>

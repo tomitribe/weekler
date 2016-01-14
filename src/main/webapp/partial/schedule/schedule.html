@@ -1,0 +1,40 @@
+<div class="container">
+    <br>
+    <div id="week" class="carousel slide">
+        <div class="carousel-inner" role="listbox">
+            <div class="week">
+                <h3>Week #{{week.week}} of year {{week.year}}</h3>
+                <div class="col-md-4">
+                    <img src="{{week.person.icon}}"/>
+                </div>
+                <div class="col-md-8 week-text">
+                    <div>
+                        <em><b>{{week.person.displayName}}</b></em>
+                    </div>
+                    <div>
+                        Mail: <a href="mailto:{{week.person.mail}}">{{week.person.mail}}</a>
+                    </div>
+                    <div>
+                        Phone Number: {{week.person.phone}}
+                    </div>
+                    <div>
+                        <a class="btn btn-primary" role="button"
+                           [routerLink]="['Week', {year: week.year, week: week.week}]">
+                            Re-affect
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" (click)="previousWeek()">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" (click)="nextWeek()">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>

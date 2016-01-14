@@ -1,0 +1,50 @@
+<h2>{{isUpdate ? 'Update' : 'Create'}} a Person</h2>
+
+<div class="alert alert-success alert-dismissible fade in" role="alert" [hidden]="!showSuccessMessage">
+    <button type="button" class="close" (click)="hideSuccessBox()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{message}}, go back on <a [routerLink]="['People']" class="nav-link">People</a>.
+</div>
+
+<form (ngSubmit)="onSubmit()" #personForm="ngForm">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 form-control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" placeholder="Name (computed)" readonly
+                   [ngModel]="person.name" ngControl="name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="displayName" class="col-sm-2 form-control-label">Display Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="displayName" placeholder="Display Name" required
+                   [(ngModel)]="person.displayName" ngControl="displayName" #displayName="ngForm">
+            <div [hidden]="!isUpdate || displayName.valid" class="alert alert-danger">
+                Display Name is required
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="mail" class="col-sm-2 form-control-label">Mail</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="mail" placeholder="Mail" required
+                   [(ngModel)]="person.mail" ngControl="mail" #mail="ngForm">
+            <div [hidden]="!isUpdate || mail.valid" class="alert alert-danger">
+                Mail is required
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="phone" class="col-sm-2 form-control-label">Phone Number</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" placeholder="Phone Number" required
+                   [(ngModel)]="person.phone" ngControl="phone" #phone="ngForm">
+            <div [hidden]="!isUpdate || phone.valid" class="alert alert-danger">
+                Phone Number is required
+            </div>
+        </div>
+    </div>
+    <button [disabled]="!personForm.form.valid" type="submit" class="btn btn-primary">{{isUpdate ? 'Update' : 'Create'}}</button>
+    <span [hidden]="!isUpdate"><button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button></span>
+</form>

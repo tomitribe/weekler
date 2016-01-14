@@ -1,0 +1,11 @@
+<h2>Update #{{week.week}} of year #{{week.year}}</h2>
+
+<form (ngSubmit)="onSubmit()">
+    <fieldset class="form-group">
+        <label for="person">Select the new weekler:</label>
+        <select class="form-control" id="person" [(ngModel)]="personName">
+            <option *ngFor="#person of people" [value]="person.name">{{ person.displayName }}</option>
+        </select>
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Affect!</button>
+</form>
