@@ -11,6 +11,22 @@ To select the person weekler will use the next person in the list browsing peopl
 
 image:src/documentation/screenshot.png[]
 
+== Build
+
+[source]
+----
+mvn clean package
+----
+
+== Run
+
+[source]
+----
+mvn compile tomee-embedded:run
+----
+
+Then go on http://localhost:8080/weekler/
+
 == TODO
 
 === Build
