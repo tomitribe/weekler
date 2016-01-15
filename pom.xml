@@ -127,14 +127,11 @@
             </configuration>
           </execution>
           <execution>
-            <id>npm-tsc</id>
-            <phase>generate-resources</phase>
+            <id>gulp-build</id>
             <goals>
-              <goal>npm</goal>
+              <goal>gulp</goal>
             </goals>
-            <configuration>
-              <arguments>run tsc</arguments>
-            </configuration>
+            <phase>generate-resources</phase>
           </execution>
         </executions>
         <configuration>
@@ -160,13 +157,31 @@
                 <resource>
                   <directory>src/main/frontend/node_modules</directory>
                   <includes>
-                    <include>**/*.js</include>
-                    <include>**/*.css</include>
+                    <include>angular2/**/*.js</include>
+                    <include>es6-promise/**/*.js</include>
+                    <include>es6-shim/**/*.js</include>
+                    <include>reflect-metadata/**/*.js</include>
+                    <include>rxjs/**/*.js</include>
+                    <include>systemjs/**/*.js</include>
+                    <include>zone.js/**/*.js</include>
                   </includes>
-                  <excludes>
-                    <exclude>**/test/*</exclude>
-                    <exclude>**/src/*</exclude>
-                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution><execution>
+            <id>copy-app.js</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/main/webapp/js/app</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/frontend/js/app/build/js</directory>
+                  <includes>
+                    <include>app.js</include>
+                  </includes>
                 </resource>
               </resources>
             </configuration>

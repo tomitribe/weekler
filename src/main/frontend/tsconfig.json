@@ -9,7 +9,7 @@
     "removeComments": false,
     "noImplicitAny": false,
     "outDir": "../webapp/js/app",
-    "rootDir": "app"
+    "rootDir": "js/app"
   },
   "exclude": [
     "node_modules"

@@ -32,8 +32,7 @@ Then go on http://localhost:8080/weekler/
 === Build
 
 - probably write a mojo to simplify the frontend part (defaults + auto transpilation of ts)
-- modify `*.component.ts` to inline templates in `@View`
-- aggregate js in one uglified file
+- use optimized angular2, rxjs versions
 
 === Tests
 

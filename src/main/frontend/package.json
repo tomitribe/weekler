@@ -5,12 +5,10 @@
   "license": "Apache-2.0",
   "repository": "TBD",
   "scripts": {
-    "tsc": "tsc",
-    "tsc:w": "tsc:w",
-    "dev": "npm run tsc:w"
+    "tsc:w": "tsc:w"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.0",
+    "angular2": "2.0.0-beta.1",
     "systemjs": "0.19.6",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
@@ -19,6 +17,12 @@
     "zone.js": "0.5.10"
   },
   "devDependencies": {
-    "typescript": "1.7.3"
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-inline-ng2-template": "0.0.10",
+    "gulp-load-plugins": "1.1.0",
+    "gulp-rename": "1.2.2",
+    "gulp-typescript": "2.10.0",
+    "gulp-uglify": "1.5.1",
+    "typescript": "1.8.0-dev.20151204"
   }
 }

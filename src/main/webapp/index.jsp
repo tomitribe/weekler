@@ -46,12 +46,12 @@
     <script>
         System.config({
             defaultJSExtensions: true,
+            bundles: { 'app/app.js': ['boot'] },
             paths: {
-                '*': 'js/*',
-                'app/*': 'js/app/*'
+                '*': 'js/*'
             }
         });
-        System.import('app/boot');
+        System.import('boot').catch(console.error.bind(console));
     </script>
 
 </head>
