@@ -136,16 +136,6 @@
               <arguments>run tsc</arguments>
             </configuration>
           </execution>
-          <execution>
-            <id>npm-prune</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <arguments>prune --production</arguments>
-            </configuration>
-          </execution>
         </executions>
         <configuration>
           <installDirectory>target/node-installation-dir</installDirectory>
