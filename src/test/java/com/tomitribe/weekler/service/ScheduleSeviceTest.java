@@ -18,10 +18,15 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import java.time.LocalDate;
 import java.time.temporal.IsoFields;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -117,5 +122,43 @@ public class ScheduleSeviceTest {
 
         service.affectWeekTo(week.getId().getWeek(), week.getId().getYear(), "foo3");
         assertEquals("foo3", service.find(weekNumber, year).getPerson().getName());
+    }
+
+    @Test
+    public void reaffect() {
+        final LocalDate date = LocalDate.now();
+        final int weekNumber = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+        final int year = date.getYear();
+
+        final BiFunction<Integer, Integer, List<String>> people = (week, y) ->
+            entityManager.createQuery("select w from Week w order by w.id.year, w.id.week", Week.class).getResultList().stream()
+                .filter(w -> w.getId().getYear() == y && w.getId().getWeek() > week)
+                .map(w -> w.getPerson().getName())
+                .collect(toList());
+
+        service.find(weekNumber, year + 1); // create 1 year of schedule
+        assertTrue(assertOrder(people.apply(5, year + 1).iterator(), asList("foo2", "foo3", "foo1")) >= 4);
+
+        personService.create("Ignored", "new@mail.com", "12325");
+        service.reaffectPeopleFrom(5, year + 1);
+        assertTrue(assertOrder(people.apply(5, year + 1).iterator(), asList("foo2", "foo3", "new", "foo1")) >= 5);
+    }
+
+    private int assertOrder(final Iterator<String> reaffectedPeople, final Collection<String> expectedOrder) {
+        // skip until we hit "foo1" cause we know the suite from foo1
+        while (!reaffectedPeople.next().equals("foo1")) {
+            // no-op
+        }
+
+        Iterator<String> expected = expectedOrder.iterator();
+        int count = 0;
+        while (reaffectedPeople.hasNext()) {
+            if (!expected.hasNext()) {
+                expected = expectedOrder.iterator();
+            }
+            assertEquals(expected.next(), reaffectedPeople.next());
+            count++;
+        }
+        return count;
     }
 }

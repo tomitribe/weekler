@@ -22,6 +22,9 @@
                            [routerLink]="['Week', {year: week.year, week: week.week}]">
                             Re-affect
                         </a>
+                        <a class="btn btn-primary" role="button" (click)="reaffectNextWeeks()">
+                            Re-affect all weeks after this one
+                        </a>
                     </div>
                 </div>
             </div>

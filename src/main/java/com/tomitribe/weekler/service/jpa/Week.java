@@ -24,7 +24,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "weekler_week")
 @NamedQueries({
-    @NamedQuery(name = "Week.findAllDesc", query = "select w from Week w order by w.id.year desc, w.id.week desc")
+    @NamedQuery(name = "Week.findAllDesc", query = "select w from Week w order by w.id.year desc, w.id.week desc"),
+    @NamedQuery(name = "Week.findAllFrom", query = "select w from Week w where (w.id.year = :year and w.id.week > :week) or (w.id.year > :year)")
 })
 public class Week {
     @EmbeddedId

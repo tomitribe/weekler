@@ -36,6 +36,17 @@ public class ScheduleService {
         return createWeeksUntil(weekNumber, year);
     }
 
+    public void reaffectPeopleFrom(final int weekNumber, final int year) {
+        final Week week = entityManager.find(Week.class, new Week.ID(weekNumber, year));
+        if (week == null) {
+            return;
+        }
+        entityManager.createNamedQuery("Week.findAllFrom", Week.class)
+            .setParameter("year", year)
+            .setParameter("week", weekNumber)
+            .getResultList().forEach(w -> w.setPerson(selectPerson(w.getId().getWeek(), w.getId().getYear())));
+    }
+
     public void affectWeekTo(final int weekNumber, final int year, final String newPerson) {
         ofNullable(find(weekNumber, year))
             .ifPresent(w -> w.setPerson(requireNonNull(personService.findByName(newPerson), "week person shouldn't be null")));
@@ -56,15 +67,16 @@ public class ScheduleService {
             IntStream.range(
                 lastWeekScheduled.getId().getWeek() + 1,
                 sameYear ? weekNumber + 1 : lastWeekNumber(lastScheduledYear) + 1)
-                    .forEach(week -> createSimpleWeek(lastScheduledYear, week, selectPerson(week, lastScheduledYear)));
+                .forEach(week -> createSimpleWeek(lastScheduledYear, week, selectPerson(week, lastScheduledYear)));
             if (!sameYear) {
                 IntStream.range(lastScheduledYear + 1, year + 1)
                     .forEach(y -> IntStream.range(1, lastWeekNumber(y) + 1)
                         .forEach(w -> createSimpleWeek(y, w, selectPerson(w, y))));
             }
         } catch (final NoResultException nre) {
-            // no week at all planned, just persist this one
-            return createSimpleWeek(year, weekNumber, personService.findByFirstOrdinal());
+            // no week at all planned, just persist this week (now) and start again
+            createSimpleWeek(date.getYear(), date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR), personService.findByFirstOrdinal());
+            return find(weekNumber, year);
         }
 
         return entityManager.find(Week.class, new Week.ID(weekNumber, year)); // should be in the cache so cheap

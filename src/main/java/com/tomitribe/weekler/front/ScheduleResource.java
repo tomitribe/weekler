@@ -8,6 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.time.temporal.IsoFields;
 
-import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 
 @Path("schedule")
@@ -53,5 +53,11 @@ public class ScheduleResource {
     public WeekModel update(final WeekModel model) {
         scheduleService.affectWeekTo(model.getWeek(), model.getYear(), model.getPerson().getName());
         return model;
+    }
+
+    @HEAD // TODO: security
+    @Path("week/reaffect")
+    public void reaffectFrom(@QueryParam("week") final int week, @QueryParam("year") final int year) {
+        scheduleService.reaffectPeopleFrom(week, year);
     }
 }

@@ -29,6 +29,10 @@ export class ScheduleService {
             .map(res => ScheduleService.jsonToWeek(res.json()));
     }
 
+    reaffectFrom(week:number, year:number): Observable<any> {
+        return this.http.head('api/schedule/week/reaffect?week=' + week + '&year=' + year, Rest.jsonHeaders());
+    }
+
     private static jsonToWeek(json:any) {
         if (json && json.person) {
             var week = new Week();

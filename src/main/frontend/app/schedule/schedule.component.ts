@@ -12,6 +12,8 @@ import "rxjs/add/operator/filter";
 })
 export class ScheduleComponent {
     week:Week = new Week();
+    information: string;
+    showInformation: boolean = false;
 
     constructor(private scheduleService:ScheduleService,
                 private routeParams:RouteParams,
@@ -35,6 +37,15 @@ export class ScheduleComponent {
     nextWeek() {
         var lastWeek = this.week.week == ScheduleComponent.lastWeek(this.week.year);
         this.router.navigate(['Schedule', {year: lastWeek ? this.week.year + 1 : this.week.year, week: lastWeek ? 1 : (this.week.week + +1)}]);
+    }
+
+    reaffectNextWeeks() {
+        this.scheduleService.reaffectFrom(this.week.week, this.week.year)
+            .filter(res => res.status < 300)
+            .subscribe(ignored => {
+                this.information = "Rescheduling done.";
+                this.showInformation = true;
+            });
     }
 
     private findWeek(week:number = -1, year:number = -1) {
