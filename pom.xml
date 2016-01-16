@@ -83,6 +83,26 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <filesets> <!-- this is out app -->
+            <fileset>
+              <directory>src/main/frontend/js/app/build</directory>
+            </fileset>
+            <fileset> <!-- this is where we copy our resources (deps + app) -->
+              <directory>src/main/webapp/js</directory>
+            </fileset>
+            <!-- not deleted for time it can take
+            <fileset>
+              <directory>src/main/frontend/node_modules</directory>
+            </fileset>
+            -->
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.openjpa</groupId>
         <artifactId>openjpa-maven-plugin</artifactId>
         <version>2.4.0</version>
@@ -157,13 +177,18 @@
                 <resource>
                   <directory>src/main/frontend/node_modules</directory>
                   <includes>
-                    <include>angular2/**/*.js</include>
+                    <include>angular2/bundles/angular2-polyfills.min.js</include>
+                    <include>angular2/bundles/angular2.min.js</include>
+                    <include>angular2/bundles/angular2.js</include> <!-- todo: rmove -->
+                    <include>angular2/bundles/http.min.js</include>
+                    <include>angular2/bundles/router.min.js</include>
+                    <include>angular2/bundles/upgrade.min.js</include>
+                    <include>rxjs/bundles/Rx.min.js</include>
+                    <include>systemjs/dist/system.js</include>
+                    <!-- TODO: filter more these 2
                     <include>es6-promise/**/*.js</include>
                     <include>es6-shim/**/*.js</include>
-                    <include>reflect-metadata/**/*.js</include>
-                    <include>rxjs/**/*.js</include>
-                    <include>systemjs/**/*.js</include>
-                    <include>zone.js/**/*.js</include>
+                     -->
                   </includes>
                 </resource>
               </resources>

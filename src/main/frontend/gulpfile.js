@@ -12,7 +12,7 @@ var paths = {
 
 // inline template + compile typescript + concatenate + uglify
 gulp.task('compile:typescript', function () {
-    var result = gulp.src(paths.src.ts)
+    var result = gulp.src([paths.src.ts])
         .pipe(plugins.inlineNg2Template({
             base: '/',
             html: true,
@@ -31,3 +31,4 @@ gulp.task('compile:typescript', function () {
 });
 
 gulp.task('default', gulp.parallel('compile:typescript'));
+

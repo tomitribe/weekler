@@ -27,11 +27,19 @@ mvn compile tomee-embedded:run
 
 Then go on http://localhost:8080/weekler/
 
+== Note
+
+To develop with the project setup keep in mind to exclude scanning from your IDE of folders:
+
+- src/main/frontend/node_modules
+- src/main/frontend/js/app/build
+- src/main/webapp/js
+
+These files are generated during the build. First one is where npm put the dependencies, the second one
+is where we build our app.js (aggregation of our .ts) and last one is where it is copied to be able
+to use it with tomee-embedded-maven-plugin and to ensure it is packaged in our .war.
+
 == TODO
-
-=== Build
-
-- use optimized angular2, rxjs versions
 
 === Tests
 

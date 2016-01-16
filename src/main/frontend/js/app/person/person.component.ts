@@ -1,13 +1,13 @@
 import {Component, View} from 'angular2/core';
-import {NgForm}    from 'angular2/common';
-import {RouteParams, Router, RouterLink} from "angular2/router";
+import {NgForm, FORM_DIRECTIVES}    from 'angular2/common';
+import {RouteParams, RouterLink} from "angular2/router";
 
 import {Person} from "./person";
 import {PersonService} from "./person.service";
 
 @Component({})
 @View({
-    directives: [RouterLink],
+    directives: [RouterLink, FORM_DIRECTIVES],
     templateUrl: 'partial/person/person.html'
 })
 export class PersonComponent {
@@ -17,8 +17,7 @@ export class PersonComponent {
     message: string = '';
 
     constructor(private personService: PersonService,
-                private routeParams: RouteParams,
-                private router: Router) {
+                private routeParams: RouteParams) {
         var name = routeParams.get('name');
         if (name) {
             this.isUpdate = true;

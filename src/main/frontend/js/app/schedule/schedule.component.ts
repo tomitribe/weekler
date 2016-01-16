@@ -3,7 +3,8 @@ import {RouterLink, RouteParams, Router} from "angular2/router";
 import {Week} from "./week";
 import {ScheduleService} from "./schedule.service";
 import {Person} from "../person/person";
-import "rxjs/add/operator/filter";
+import {Observable} from "rxjs/Observable";
+import 'rxjs/operator/filter';
 
 @Component({})
 @View({

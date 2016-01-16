@@ -5,8 +5,8 @@ import {Rest} from "../util/rest";
 import {Http, Headers, Response} from 'angular2/http';
 import {Injectable} from "angular2/core";
 import {Observable} from "rxjs/Observable";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
+import 'rxjs/operator/map';
+import 'rxjs/operator/filter';
 
 @Injectable()
 export class ScheduleService {
