@@ -11,3 +11,4 @@
         <a [routerLink]="['PersonEdit', {name: person.name}]">{{ person.displayName }}</a>
     </li>
 </ul>
+<a *ngIf="pageNumber > 0" (click)="loadPrevious()">Next</a> | <a *ngIf="page.hasNext" (click)="loadNext()">Next</a>
